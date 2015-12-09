@@ -1,6 +1,6 @@
 //skeleton file for class Binary
 
-public class Binary {
+public class Binary implements Comparable{
 
     //inst vars
     private int _decNum;

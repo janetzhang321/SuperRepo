@@ -9,11 +9,11 @@ public interface Comparable {
     void divide(Object o);
     void add(Object o);
     void subtract(Object o);
-//   int max(int a, int b);
-//    double maxN(double a, double b);
-//    int gcd();
-//    int gcd(int a, int b);
-    void reduce();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        duce(); 
+   int max(int a, int b);
+    double maxN(double a, double b);
+    int gcd();
+    int gcd(int a, int b);
+    void reduce(); 
     boolean equalsH(Object r);
     boolean equals(Object o);
     */ 
