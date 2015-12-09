@@ -1,6 +1,12 @@
+/*
+  Janet Zhang
+  APCS1 pd5
+  HW43 -- This or That
+  2015-12-07
+*/
 //skeleton file for class Binary
 
-public class Binary implements Comparable{
+public class Binary {
 
     //inst vars
     private int _decNum;
@@ -14,8 +20,8 @@ public class Binary implements Comparable{
       =====================================*/
     public Binary() { 
 	/****** YOUR IMPLEMENTATION HURRR ******/
-	_decNum=0;
-	_binNum="0";
+    	_decNum=0;
+    	_binNum="0";
     }
 
 
@@ -40,8 +46,8 @@ public class Binary implements Comparable{
       =====================================*/
     public Binary( String s ) {
 	/****** YOUR IMPLEMENTATION HURRR ******/   
-	_binNum=s;
-	_decNum=binToDec(s);
+    	_binNum=s;
+    	_decNum=binToDec(s);
     }
 
 
@@ -52,7 +58,7 @@ public class Binary implements Comparable{
       =====================================*/
     public String toString() { 
 	/****** YOUR IMPLEMENTATION HURRR ******/   
-	return _binNum;
+    	return _binNum;
     }
 
 
@@ -68,9 +74,13 @@ public class Binary implements Comparable{
       =====================================*/
     public static String decToBin( int n ) {
 	/****** YOUR IMPLEMENTATION HURRR ******/
-	if (n>=0){
-	    
+	String r=""; //"hello"+n;
+	if (n==0) return "0";
+	while (n>0){
+	    r=n%2+r; //build from right to left
+	    n=n/2; //keep dividing
 	}
+	return r;
     }
 
 
@@ -85,7 +95,12 @@ public class Binary implements Comparable{
       decToBinR(14) -> "1110"
       =====================================*/
     public static String decToBinR( int n ) { 
-	/****** YOUR IMPLEMENTATION HURRR ******/   
+	/****** YOUR IMPLEMENTATION HURRR ******/  
+	String bin="";
+	if (n>0){
+	    bin=decToBinR(n/2)+n%2; //build from right to left
+	}
+	return bin;
     }
 
 
@@ -100,8 +115,21 @@ public class Binary implements Comparable{
       binToDec("11") -> 3
       binToDec("1110") -> 14
       =====================================*/
-    public static String binToDec( String s ) {
+    public static int binToDec( String s ) {
 	/****** YOUR IMPLEMENTATION HURRR ******/   
+	int dec=0;
+	int bin=Integer.parseInt(s);
+	int c=0;
+	int lastD;
+	double num;
+	while (c<s.length()) {//stop when c reaches the length of s
+	    lastD=bin%10;//the last digit
+	    num=Math.pow(2,c);//2^c
+	    dec+=num*lastD;
+	    bin=bin/10;//reduce the number
+	    c++;
+	}
+	return dec;
     }
 
 
@@ -116,8 +144,17 @@ public class Binary implements Comparable{
       binToDecR("11") -> 3
       binToDecR("1110") -> 14
       =====================================*/
-    public static String binToDecR( String s ) { 
-	/****** YOUR IMPLEMENTATION HURRR ******/   
+    public static int binToDecR( String s ) { 
+	/****** YOUR IMPLEMENTATION HURRR ******/  
+	int dec=0;
+	int c=s.length()-1;
+	if (s.length()>=1) {
+	    int firstD=Integer.parseInt(s.substring(0, 1));
+	    int multiplier=(int)Math.pow(2,c);
+	    dec+=firstD*multiplier+
+		binToDecR(s.substring(1,s.length()));
+	}
+	return dec;
     }
 
 
@@ -128,7 +165,12 @@ public class Binary implements Comparable{
       Object), or if this and other represent equal binary values
       =============================================*/
     public boolean equals( Object other ) { 
-	/****** YOUR IMPLEMENTATION HURRR ******/   
+	/****** YOUR IMPLEMENTATION HURRR ******/
+	if ( !(other instanceof Binary) ) return false;
+	else if ( ((Binary)other)==this  ||
+		  ((Binary)other)._binNum.equals(this._binNum) )
+	    {return true;}
+	return false;
     }
 
 
@@ -139,27 +181,54 @@ public class Binary implements Comparable{
       negative integer if this<input, positive integer otherwise
       =============================================*/
     public int compareTo( Object other ) {
-	/****** YOUR IMPLEMENTATION HURRR ******/   
+	/****** YOUR IMPLEMENTATION HURRR ******/
+	if ( this.equals((Binary)other) ) return 0;
+	else if ( this._decNum > ((Binary)other)._decNum ) return 1;
+	else return -1;
     }
 
 
     //main method for testing
     public static void main( String[] args ) {
 
-	/*=========================================
 	System.out.println();
 	System.out.println( "Testing ..." );
 
 	Binary b1 = new Binary(5);
 	Binary b2 = new Binary(5);
-	Binary b3 = b1;
+	Binary b3 = b1; // new Binary(5)
 	Binary b4 = new Binary(7);
 
-	System.out.println( b1 );
-	System.out.println( b2 );
-	System.out.println( b3 );       
-	System.out.println( b4 );       
+	//Bin<->Dec Test cases
+	
+	String r="";
+	/*
+	  r+=decToBinR(5);r+="\n";
+	  r+=decToBinR(100);r+="\n";
+	  r+=decToBinR(30);r+="\n";
+	  r+=decToBinR(63);r+="\n";
+	  r+=decToBinR(420);r+="\n";
+	  r+=decToBinR(47);r+="\n";
+	  r+=decToBinR(64);r+="\n";
+	  r+=decToBinR(22);r+="\n";
+	*/
+	
+	r+=binToDecR("101");r+="\n";
+	r+=binToDecR("1100100");r+="\n";
+	r+=binToDecR("11110");r+="\n";
+	r+=binToDecR("111111");r+="\n";
+	r+=binToDecR("110100100");r+="\n";
+	r+=binToDecR("101111"); r+="\n";
+	r+=binToDecR("1000000"); r+="\n";
+	r+=binToDecR("10110"); r+="\n";
+	
+	System.out.println(r);
+	
 
+	System.out.println( b1 );//101
+	System.out.println( b2 );//101
+	System.out.println( b3 );//101  
+	System.out.println( b4 );//111       
 	System.out.println( "\n==..." );
 	System.out.println( b1 == b2 ); //should be false
 	System.out.println( b1 == b3 ); //should be true
@@ -176,6 +245,9 @@ public class Binary implements Comparable{
 	System.out.println( b1.compareTo(b3) ); //should be 0
 	System.out.println( b1.compareTo(b4) ); //should be neg
 	System.out.println( b4.compareTo(b1) ); //should be pos
+	/*=========================================
+
+
 	  =========================================*/
     }//end main()
 

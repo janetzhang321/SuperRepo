@@ -1,5 +1,5 @@
 /*
-  Team Comparable-Janet Zhang, Mei Huang
+  Team Irrational-Janet Zhang, Mei Huang
   APCS1 pd5
   HW41 -- In America, the Driver Sits on the Left
   2015-12-03
@@ -110,7 +110,7 @@ class Rational implements Comparable {
     //PHASE 4
     
     //equals helper to check equivalence of Rational objects
-    public boolean equalsH(Object r){
+    public boolean equalsH(Rational r){
       	int slash=r.toString().indexOf("/");
       	int length=r.toString().length();
     	int n=Integer.parseInt(r.toString().substring(0,slash));//finds n
@@ -124,48 +124,47 @@ class Rational implements Comparable {
     }
    	
     public static void main(String[] args) {
-    Comparable goose = new Rational (2,0); //Stores the rational number 0/1 bc invalid params
-	Comparable t = new Rational (4,18); //Stores the rational number 4/18
-	Comparable r = new Rational (2,3); //Stores the rational number 2/3
-	Comparable s = new  Rational (1,2); //Stores the rational number 1/2
-	System.out.println("r: "+(Rational)r);
-	System.out.println("s: "+(Rational)s);
-	System.out.println("t: "+(Rational)t);
+    Rational goose = new Rational(2,0); //Stores the rational number 0/1 bc invalid params
+	Rational t = new Rational (4,18); //Stores the rational number 4/18
+	Rational r = new Rational (2,3); //Stores the rational number 2/3
+	Rational s = new  Rational (1,2); //Stores the rational number 1/2
+	System.out.println("r: "+r);
+	System.out.println("s: "+s);
+	System.out.println("t: "+t);
 	//Part1
 	System.out.println("\nMultiplying r by s...");
-	((Rational)r).multiply((Rational)s); //Multiplies r by s, changes r to 2/6.  s remains ½
+	r.multiply(s); //Multiplies r by s, changes r to 2/6.  s remains ½
 	System.out.println("r now equals: "+ r);
 	System.out.println("s now equals: "+ s);
 	System.out.println("\nDividing r by s...");
-	((Rational)r).divide((Rational)s); //Multiplies r by s, changes r to 2/6.  s remains ½
+	r.divide(s); //Multiplies r by s, changes r to 2/6.  s remains ½
 	//Part2
-	System.out.println("r now equals: "+ (Rational)r);
-	System.out.println("s now equals: "+ (Rational)s);
+	System.out.println("r now equals: "+ r);
+	System.out.println("s now equals: "+ s);
 	System.out.println("\nAdding s to r...");
-	((Rational)r).add((Rational)s);  //Adds r to s, changes r to 7/6.  s remains 1/2
-	System.out.println("r now equals: "+ (Rational)r);
-	System.out.println("s now equals: "+ (Rational)s);
+	r.add(s);  //Adds r to s, changes r to 7/6.  s remains 1/2
+	System.out.println("r now equals: "+ r);
+	System.out.println("s now equals: "+ s);
 	System.out.println("\nSubtracting s from r...");
-	((Rational)r).subtract((Rational)s);
-	System.out.println("r now equals: "+ (Rational)r);
-	System.out.println("s now equals: "+ (Rational)s);
-	((Rational)t).reduce(); //Changes t to 2/9
-	System.out.println("t now equals: "+ (Rational)t);
+	r.subtract(s);
+	System.out.println("r now equals: "+ r);
+	System.out.println("s now equals: "+ s);
+	t.reduce(); //Changes t to 2/9
+	System.out.println("t now equals: "+ t);
 		
 	//Part3
 	System.out.println("\nComparing t to s...");
 	System.out.println("if t is greater than s: return 1 \nif t is less than s: return -1 \nif t is equal to s: return 0");
-	System.out.println(t.compareTo((Rational)s));
+	System.out.println(t.compareTo(s));
 		
 	//Part4
 	System.out.println("\nis t .equals to s?");
-	System.out.println(((Rational)t).equals(s));//false
+	System.out.println(t.equals(s));//false
 	System.out.println("\nis t .equals to t?");
-	System.out.println(((Rational)t).equals(t));//true
+	System.out.println(t.equals(t));//true
 	System.out.println("\nis t .equals to 4/18?");
-	System.out.println(((Rational)t).equals(4/18));//false
+	System.out.println(t.equals(4/18));//false
 	System.out.println("\nis t .equals to 2/9?");
-	System.out.println(((Rational)t).equals(2/9));//false
+	System.out.println(t.equals(2/9));//false
     }
 }
-
