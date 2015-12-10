@@ -127,154 +127,85 @@ class SuperArray implements ListInt {
     // ~~~~~~~~~~~~~~ TESTING ~~~~~~~~~~~~~~
     //return number of meaningful items in _data
     public int size() {return _size;}
-
+    public int compareTo( Object other ) {
+	if( other instanceof SuperArray ) {
+	    if( this.size() > ((SuperArray)other).size() ) { return 1; }
+	    else if( this.size() < ((SuperArray)other).size() ) { return -1; }
+	    else { return 0; }
+	}
+	else if( other == null ) {
+	    throw new NullPointerException( "\n Error: compareTo() Input is null" );
+	}
+	else {
+	    throw new ClassCastException( "\n Error: compareTo() Input is not an instance of SuperArray" );
+	}
+    }
     public int linSearch(Comparable a) {
 	if ( !(this instanceof SuperArray)){throw new ClassCastException("\n Error: Object was not of class SuperArray");}
-	for(int i=0; i<((SuperArray)this).size(); i++){if (this._data[i]==a) return i;}
+	for(int i=0; i<((SuperArray)this).size(); i++)
+	    { if (_data[i].compareTo(a)==0) return i;}
 	return -1;
-
     }
 
     public boolean isSorted(){
 	if ( !(this instanceof SuperArray)){throw new ClassCastException("\n Error: Object was not of class SuperArray");}
-        for (int i=0 ; i<( (((SuperArray)this).size())-1 ) ;i++){if (this._data[i].compareTo(this._data[i+1])>0) return false;}//num before is greater than the num after
+        for (int i=0 ; i<( (((SuperArray)this).size())-1 ) ;i++){
+	    if (this._data[i].compareTo(this._data[i+1])>0)
+		return false;
+	}//num before is greater than the num after
 	return true;
     }
     
     //main method for testing
     public static void main( String[] args ) {
-    	/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	  SuperArray curtis = new SuperArray();
-	  System.out.println("Printing empty SuperArray curtis...");
-	  System.out.println(curtis);
+	//mixed
 	
-	  for( int i = 0; i < curtis._data.length; i++ ) {
-	  curtis.set(i,i*2);
-	  curtis._size++; //necessary bc no add() method yet
-	  }
-	
-	  System.out.println("Printing populated SuperArray curtis...");
-	  System.out.println(curtis);
-	
-	  System.out.println("testing get()...");
-	  for( int i = 0; i < curtis._size; i++ ) {
-	  System.out.print( "item at index" + i + ":\t" );
-	  System.out.println( curtis.get(i) );
-	  }
-	
-	  System.out.println("Expanded SuperArray curtis:");
-	  curtis.expand();
-	  curtis.add(5);
-	  System.out.println(curtis.size());
-	  System.out.println(curtis);
-	    
-	  System.out.println("Inseting item into SuperArray curtis:");
-	  curtis.add(1,10);
-	  System.out.println(curtis);
-	    
-	  System.out.println("Removing item from SuperArray curtis:");
-	  curtis.remove(1);
-	  System.out.println(curtis);
-	  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-	
-    	/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    	
-	  SuperArray mayfield = new SuperArray();
-	  System.out.println("Printing empty SuperArray mayfield...");
-	  System.out.println(mayfield);
-    
-	  mayfield.add(5);
-	  mayfield.add(4);
-	  mayfield.add(3);
-	  mayfield.add(2);
-	  mayfield.add(1);
-
-	  System.out.println("Printing populated SuperArray mayfield...");
-	  System.out.println(mayfield);
-
-	  mayfield.remove(3);
-	  System.out.println("Printing SuperArray mayfield post-remove...");
-	  System.out.println(mayfield);
-	  mayfield.remove(3);
-	  System.out.println("Printing SuperArray mayfield post-remove...");
-	  System.out.println(mayfield);
-
-	  mayfield.add(3,99);
-	  System.out.println("Printing SuperArray mayfield post-insert...");
-	  System.out.println(mayfield);
-	  mayfield.add(2,88);
-	  System.out.println("Printing SuperArray mayfield post-insert...");
-	  System.out.println(mayfield);
-	  mayfield.add(1,77);
-	  System.out.println("Printing SuperArray mayfield post-insert...");
-	  System.out.println(mayfield);
-	  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-	//*****INSERT ANY ADDITIONAL TEST CALLS HERE*****
-	ListInt l=new SuperArray();
-    
-	System.out.println("Printing empty ListInt a...");
-	System.out.println(l);
-
-	/*
-	  a.add(5);
-	  a.add(4);
-	  a.add(3);
-	  a.add(2);
-	  a.add(1);
-	*/
-	/*
-	  ListInt a=new SuperArray();
-	  for (Comparable o: ((SuperArray)a)._data)
-	  ((SuperArray)a).add( new Binary ( (int)(10*(Math.random())) ) , o );
-	*/
 	SuperArray a = new SuperArray();
+	System.out.println("Printing empty ListInt a...");
+	System.out.println(a);
 	a.add( new Binary(2) );
 	a.add( new Hexadecimal(60) );
 	a.add( new Binary(16) );
 	a.add( new Hexadecimal(100) );
 	a.add( new Rational(2, 1) );
 
-	
 	System.out.println("Printing populated ListInt a...");
 	System.out.println(a);
 
-	System.out.println(a.linSearch(new Binary(60)));
-	//System.out.println(a.linSearch(new Binary(16)));
-	/*
-
-	a.remove(3);
-	System.out.println("Printing ListInt a post-remove...");
-	System.out.println(a);
-	a.remove(3);
-	System.out.println("Printing ListInt a post-remove...");
-	System.out.println(a);
-	*/	
-
-	/*
-	  a.add(3,99);
-	  System.out.println("Printing ListInt a post-insert...");
-	  System.out.println(a);
-	  a.add(2,88);
-	  System.out.println("Printing ListInt a post-insert...");
-	  System.out.println(a);
-	  a.add(1,77);
-	  System.out.println("Printing ListInt a post-insert...");
-	  System.out.println(a);
-	  a.add(7,3);
-	  System.out.println("Printing ListInt a post-insert...");
-	  System.out.println(a);
+	System.out.println( a.linSearch(new Binary (60) ));
+	System.out.println(a.linSearch(new Binary(2)));
+	System.out.println(a.isSorted());
 	
-	  a.add(20,4);
-	*/
+	//rational
+	SuperArray r = new SuperArray();
 
-	/*
-	System.out.println(a);
-	a.remove(4);
-	System.out.println(a);
-	System.out.println(a.size());
-	System.out.println(a.get(1));
+	r.add( new Rational(1, 5) );
+	r.add( new Rational(2, 5) );
+	r.add( new Rational(3, 5) );	
+	r.add( new Rational(4, 5) );	
+	r.add( new Rational(5, 5) );
 
-	*/
+	System.out.println( r );
+	System.out.println(r.linSearch(new Rational (60,60) ));
+	System.out.println(r.linSearch(new Rational (2,5)));	
+	System.out.println(r.isSorted());
+	
+	//binary
+	SuperArray b = new SuperArray();
+
+	b.add(new Binary (2) );
+	b.add(new Binary (4) );
+	b.add(new Binary (8) );
+	b.add(new Binary (16) );
+	b.add(new Binary (32) );
+	b.add(new Binary (64) );
+	b.add(new Binary (2) );
+
+	System.out.println( b );
+	System.out.println(b.linSearch(new Binary (2) ));
+	System.out.println(b.linSearch(new Binary (10) ));
+	System.out.println(b.linSearch(new Binary (32) ));	
+	System.out.println(b.isSorted());
 	
     }//end main
 		

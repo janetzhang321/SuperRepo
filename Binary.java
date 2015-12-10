@@ -50,6 +50,8 @@ public class Binary implements Comparable{
     	_decNum=binToDec(s);
     }
 
+    public String getBinNum(){return _binNum;}
+    public int getDecNum(){return _decNum;}
 
     /*=====================================
       String toString() -- returns String representation of this Object
@@ -166,7 +168,7 @@ public class Binary implements Comparable{
       =============================================*/
     public boolean equals( Object other ) { 
 	/****** YOUR IMPLEMENTATION HURRR ******/
-      	if (!(other instanceof Rational)){throw new ClassCastException("\n Error: equals() input was not of class Binary");}
+      	if (!(other instanceof Comparable)){throw new ClassCastException("\n Error: equals() input was not of class Binary");}
 	else if (other==null){throw new NullPointerException("\n Error: equals() input was null");}
 	else if ( ((Binary)other)==this  ||
 		  ((Binary)other)._binNum.equals(this._binNum) )
@@ -181,77 +183,90 @@ public class Binary implements Comparable{
       post: Returns 0 if this Object is equal to the input Object,
       negative integer if this<input, positive integer otherwise
       =============================================*/
-    public int compareTo( Object other ) {
-	/****** YOUR IMPLEMENTATION HURRR ******/
-      	if (!(other instanceof Binary)){throw new ClassCastException("\n Error: compareTo() input was not of class Rational");}
+   public int compareTo( Object other ) {
+	if ( other instanceof Comparable ) {
+	    if (other instanceof Hexadecimal) {
+		if( this._decNum < ((Hexadecimal)other).getDecNum() ) { return -1;}
+		else if( this._decNum == ((Hexadecimal)other).getDecNum() ) {return 0;}
+		else {return 1;}
+	    }
+	    else if (other instanceof Binary){
+		if( this._decNum < ((Binary)other).getDecNum() ) {return -1;}
+		else if( this._decNum == ((Binary)other).getDecNum() ) {return 0;}
+		else {return 1;}
+	    }
+	    else if (other instanceof Rational) {
+		if( this._decNum < ((Rational)other).floatValue() ) { return -1; }
+		else if( this._decNum > ((Rational)other).floatValue() ) { return 1; }
+		else { return 0; }
+	    }
+	}
 	else if (other==null){throw new NullPointerException("\n Error: compareTo() input was null");}
-	else if ( this.equals((Binary)other) ) return 0;
-	else if ( this._decNum > ((Binary)other)._decNum ) return 1;
-	else return -1;
+	else {throw new ClassCastException("\n Error: compareTo() input was not of numerical class");}
+	return -1;
     }
 
+	//main method for testing
+	public static void main( String[] args ) {
 
-    //main method for testing
-    public static void main( String[] args ) {
+	    System.out.println();
+	    System.out.println( "Testing ..." );
 
-	System.out.println();
-	System.out.println( "Testing ..." );
+	    Binary b1 = new Binary(5);
+	    Binary b2 = new Binary(5);
+	    Binary b3 = b1; // new Binary(5)
+	    Binary b4 = new Binary(7);
 
-	Binary b1 = new Binary(5);
-	Binary b2 = new Binary(5);
-	Binary b3 = b1; // new Binary(5)
-	Binary b4 = new Binary(7);
-
-	//Bin<->Dec Test cases
+	    //Bin<->Dec Test cases
 	
-	String r="";
-	/*
-	  r+=decToBinR(5);r+="\n";
-	  r+=decToBinR(100);r+="\n";
-	  r+=decToBinR(30);r+="\n";
-	  r+=decToBinR(63);r+="\n";
-	  r+=decToBinR(420);r+="\n";
-	  r+=decToBinR(47);r+="\n";
-	  r+=decToBinR(64);r+="\n";
-	  r+=decToBinR(22);r+="\n";
-	*/
+	    String r="";
+	    /*
+	      r+=decToBinR(5);r+="\n";
+	      r+=decToBinR(100);r+="\n";
+	      r+=decToBinR(30);r+="\n";
+	      r+=decToBinR(63);r+="\n";
+	      r+=decToBinR(420);r+="\n";
+	      r+=decToBinR(47);r+="\n";
+	      r+=decToBinR(64);r+="\n";
+	      r+=decToBinR(22);r+="\n";
+	    */
 	
-	r+=binToDecR("101");r+="\n";
-	r+=binToDecR("1100100");r+="\n";
-	r+=binToDecR("11110");r+="\n";
-	r+=binToDecR("111111");r+="\n";
-	r+=binToDecR("110100100");r+="\n";
-	r+=binToDecR("101111"); r+="\n";
-	r+=binToDecR("1000000"); r+="\n";
-	r+=binToDecR("10110"); r+="\n";
+	    r+=binToDecR("101");r+="\n";
+	    r+=binToDecR("1100100");r+="\n";
+	    r+=binToDecR("11110");r+="\n";
+	    r+=binToDecR("111111");r+="\n";
+	    r+=binToDecR("110100100");r+="\n";
+	    r+=binToDecR("101111"); r+="\n";
+	    r+=binToDecR("1000000"); r+="\n";
+	    r+=binToDecR("10110"); r+="\n";
 	
-	System.out.println(r);
+	    System.out.println(r);
 	
 
-	System.out.println( b1 );//101
-	System.out.println( b2 );//101
-	System.out.println( b3 );//101  
-	System.out.println( b4 );//111       
-	System.out.println( "\n==..." );
-	System.out.println( b1 == b2 ); //should be false
-	System.out.println( b1 == b3 ); //should be true
+	    System.out.println( b1 );//101
+	    System.out.println( b2 );//101
+	    System.out.println( b3 );//101  
+	    System.out.println( b4 );//111       
+	    System.out.println( "\n==..." );
+	    System.out.println( b1 == b2 ); //should be false
+	    System.out.println( b1 == b3 ); //should be true
 
-	System.out.println( "\n.equals()..." );
-	System.out.println( b1.equals(b2) ); //should be true
-	System.out.println( b1.equals(b3) ); //should be true
-	System.out.println( b3.equals(b1) ); //should be true
-	System.out.println( b4.equals(b2) ); //should be false
-	System.out.println( b1.equals(b4) ); //should be false
+	    System.out.println( "\n.equals()..." );
+	    System.out.println( b1.equals(b2) ); //should be true
+	    System.out.println( b1.equals(b3) ); //should be true
+	    System.out.println( b3.equals(b1) ); //should be true
+	    System.out.println( b4.equals(b2) ); //should be false
+	    System.out.println( b1.equals(b4) ); //should be false
 
-	System.out.println( "\n.compareTo..." );
-	System.out.println( b1.compareTo(b2) ); //should be 0
-	System.out.println( b1.compareTo(b3) ); //should be 0
-	System.out.println( b1.compareTo(b4) ); //should be neg
-	System.out.println( b4.compareTo(b1) ); //should be pos
-	/*=========================================
+	    System.out.println( "\n.compareTo..." );
+	    System.out.println( b1.compareTo(b2) ); //should be 0
+	    System.out.println( b1.compareTo(b3) ); //should be 0
+	    System.out.println( b1.compareTo(b4) ); //should be neg
+	    System.out.println( b4.compareTo(b1) ); //should be pos
+	    /*=========================================
 
 
-	  =========================================*/
-    }//end main()
+	      =========================================*/
+	}//end main()
 
-} //end class
+    } //end class

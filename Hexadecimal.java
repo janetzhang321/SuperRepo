@@ -26,6 +26,8 @@ public class Hexadecimal implements Comparable {
         _hexNum = s;
     }
 
+    public String getHexNum(){return _hexNum;}
+    public int getDecNum(){return _decNum;}
     /*
       public String toString() {
       return ("Decimal: " + _decNum + "\n" + "Hexadecimal: " + _hexNum + "\n");
@@ -62,7 +64,7 @@ public class Hexadecimal implements Comparable {
 
     public static String decToHexR( int n ) {
       	if (n > 0) {
-      	    return (decToHexR(n/16) + HEXDIGITS.substring(n%16, n%16 + 1) );      	}
+      	    return (decToHexR(n/16) + HEXDIGITS.substring(n%16, n%16 + 1) );}
       	else
       	    return "";}
 
@@ -83,30 +85,70 @@ public class Hexadecimal implements Comparable {
 	return dec;}
     
     /*=============================================*/
+
+    
     public boolean equals( Object other ) {
-     	if ( !(other instanceof Hexadecimal) )
-     	    throw new ClassCastException("\n Error: equals() input was not of class Hexadecimal");
+     	if ( !(other instanceof Hexadecimal) ) {throw new ClassCastException("\n Error: equals() input was not of class Hexadecimal");}
 	else if (other==null){throw new NullPointerException("\n Error: equals() input was null");}
-     	else if (this == other)
-     	    return true;
-	return (this==other || compareTo(other)==0);
+     	else if (this==((Hexadecimal)other)) return true;
+	return ((this==other) || ( this._hexNum.equals(((Hexadecimal)other)._hexNum ) ));
     }
-
-
+    /*
+      public int compareTo( Object other ) {
+      if( other instanceof Comparable ) {
+      if( other instanceof Hexadecimal ) {
+      if( this._decNum < ((Hexadecimal)other)._decNum ) { return -1;}
+      else if( this._decNum == ((Hexadecimal)other)._decNum ) {return 0;}
+      else {return 1;}
+      }
+      else if( other instanceof Binary ) {
+      if( this._decNum < ((Binary)other).getDecNum() ) { return -1; }
+      else if( this._decNum > ((Binary)other).getDecNum() ) { return 1; }
+      else { return 0; }
+      }
+      else if( other instanceof Rational ) {
+      if( this._decNum < ((Rational)other).floatValue() ) { return -1; }
+      else if( this._decNum > ((Rational)other).floatValue() ) { return 1; }
+      else { return 0; }
+      }
+      }
+      else if( other == null ) {throw new NullPointerException( "\ncompareTo()||ERROR||Input is null" );}
+      else {throw new ClassCastException( "\ncompareTo()||ERROR||Input is not an instance of Binary" );}
+      return -1;
+      }
+    */
     public int compareTo( Object other ) {
-     	if ( !(other instanceof Hexadecimal) )
-     	    throw new ClassCastException("\n Error: compareTo() input was not of class Hexadecimal");
+	if ( other instanceof Comparable ) {
+	    if (other instanceof Hexadecimal) {
+		if( this._decNum < ((Hexadecimal)other)._decNum ) { return -1;}
+		else if( this._decNum == ((Hexadecimal)other)._decNum ) {return 0;}
+		else {return 1;}
+	    }
+	    else if (other instanceof Binary){
+		if( this._decNum < ((Binary)other).getDecNum() ) {return -1;}
+		else if( this._decNum == ((Binary)other).getDecNum() ) {return 0;}
+		else {return 1;}
+	    }
+	    else if (other instanceof Rational) {
+		if( this._decNum < ((Rational)other).floatValue() ) { return -1; }
+		else if( this._decNum > ((Rational)other).floatValue() ) { return 1; }
+		else { return 0; }
+	    }
+	}
 	else if (other==null){throw new NullPointerException("\n Error: compareTo() input was null");}
-     	return _decNum - ((Hexadecimal)other)._decNum;
+	else {throw new ClassCastException("\n Error: compareTo() input was not of numerical class");}
+	return -1;
     }
+    
     //main method for testing
+
     public static void main( String[] args ) {
 	//Hexadecimal h1 = new Hexadecimal("10FFD"); //69629
 	System.out.println(hexToDec("10FD")); //4349
-
+	
 	System.out.println();
 	System.out.println( "Testing ..." );
-
+	
 	Hexadecimal h1 = new Hexadecimal(26);
 	Hexadecimal h2 = new Hexadecimal(26);
 	Hexadecimal h3 = h1; // new Hexdecimal(5)
@@ -135,13 +177,13 @@ public class Hexadecimal implements Comparable {
 	System.out.println( h4.compareTo(h1) ); //should be pos
 	
 	// Null Pointer Input Test
-	Object thing = null;
-	System.out.println(h1.equals(thing));
+	//Object thing = null;
+	//System.out.println(h1.equals(thing));
 
 	// Invalid Object Parameter Input Test
-	thing = new Object();
-	System.out.println(h1.equals(thing));
-	/*=========================================
+	//thing = new Object();
+	//System.out.println(h1.equals(thing));
+	/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	  ==========================================*/
 
     }//end main()

@@ -24,6 +24,9 @@ class Rational implements Comparable {
     public double floatValue(int n, int d){
 	return (n*1.0)/d;
     }
+    public double floatValue(){
+	return (n*1.0)/d;
+    }
     public void multiply(Rational other){
 	int otherS=other.toString().indexOf("/");
 	int otherL=other.toString().length();
@@ -45,6 +48,9 @@ class Rational implements Comparable {
 	d/=otherD;
     }
 
+    public int getNumer(){return n;}
+    public int getDenom(){return d;}
+    
     //PHASE 2
     public static int max(int a, int b){
 	if (a>b){
@@ -95,19 +101,31 @@ class Rational implements Comparable {
 	    return max(a,b);}//the output when a and b are equal
 	return gcd(a%b, b%a);//else, keep modulating until a==b(in above) and return it
     }
-    public int compareTo(Object other){
-      	if (!(other instanceof Rational)){throw new ClassCastException("\n Error: compareTo() input was not of class Rational");}
+    public int compareTo( Object other ) {
+	if ( other instanceof Comparable ) {
+	    if (other instanceof Hexadecimal) {
+		if( this.floatValue() < ((Hexadecimal)other).getDecNum() ) { return -1;}
+		else if( this.floatValue() == ((Hexadecimal)other).getDecNum() ) {return 0;}
+		else {return 1;}
+	    }
+	    else if (other instanceof Binary){
+		if( this.floatValue() < ((Binary)other).getDecNum() ) {return -1;}
+		else if( this.floatValue() == ((Binary)other).getDecNum() ) {return 0;}
+		else {return 1;}
+	    }
+	    else if( other instanceof Rational ) {
+		this.reduce();
+		((Rational)other).reduce();
+		int a = this.n * ((Rational)other).d;
+		int b = this.d * ((Rational)other).n;
+		if ( a == b ) {return 0;}
+		else if ( a < b ) {return -1;}
+		else { return 1;}
+	    }
+	}
 	else if (other==null){throw new NullPointerException("\n Error: compareTo() input was null");}
-        ((Rational)other).reduce();
-	int otherS=other.toString().indexOf("/");
-	int otherL=other.toString().length();
-	int otherN=Integer.parseInt(other.toString().substring(0,otherS));
-	int otherD=Integer.parseInt(other.toString().substring(otherS+1,otherL));
-	double numO=floatValue(otherN,otherD);
-        double numN=floatValue(n,d);
-	if (numO==(numN)) return 0;
-	else if (numO==maxN(numO,numN)) return 1;
-	else return -1;
+	else {throw new ClassCastException("\n Error: compareTo() input was not of numerical class");}
+	return -1;
     }
     //PHASE 4
     
@@ -165,9 +183,11 @@ class Rational implements Comparable {
 	System.out.println(t.equals(s));//false
 	System.out.println("\nis t .equals to t?");
 	System.out.println(t.equals(t));//true
+	/*
 	System.out.println("\nis t .equals to 4/18?");
 	System.out.println(t.equals(4/18));//false
 	System.out.println("\nis t .equals to 2/9?");
 	System.out.println(t.equals(2/9));//false
+	*/
     }
 }
