@@ -96,6 +96,8 @@ class Rational implements Comparable {
 	return gcd(a%b, b%a);//else, keep modulating until a==b(in above) and return it
     }
     public int compareTo(Object other){
+      	if (!(other instanceof Rational)){throw new ClassCastException("\n Error: compareTo() input was not of class Rational");}
+	else if (other==null){throw new NullPointerException("\n Error: compareTo() input was null");}
         ((Rational)other).reduce();
 	int otherS=other.toString().indexOf("/");
 	int otherL=other.toString().length();
@@ -119,7 +121,8 @@ class Rational implements Comparable {
     }
     //overwritten equals method to check equivalence
     public boolean equals(Object o){
-      	if (!(o instanceof Rational)){return false;}
+	if (o==null){throw new NullPointerException("\n Error: equals() input was null");}
+      	else if (!(o instanceof Rational)){throw new ClassCastException("\n Error: equals() input was not of class Rational");}
       	return equalsH((Rational)o);//typecasts o, which is a instance of Object to Rational
     }
    	

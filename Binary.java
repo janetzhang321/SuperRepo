@@ -6,7 +6,7 @@
 */
 //skeleton file for class Binary
 
-public class Binary {
+public class Binary implements Comparable{
 
     //inst vars
     private int _decNum;
@@ -166,7 +166,8 @@ public class Binary {
       =============================================*/
     public boolean equals( Object other ) { 
 	/****** YOUR IMPLEMENTATION HURRR ******/
-	if ( !(other instanceof Binary) ) return false;
+      	if (!(other instanceof Rational)){throw new ClassCastException("\n Error: equals() input was not of class Binary");}
+	else if (other==null){throw new NullPointerException("\n Error: equals() input was null");}
 	else if ( ((Binary)other)==this  ||
 		  ((Binary)other)._binNum.equals(this._binNum) )
 	    {return true;}
@@ -182,7 +183,9 @@ public class Binary {
       =============================================*/
     public int compareTo( Object other ) {
 	/****** YOUR IMPLEMENTATION HURRR ******/
-	if ( this.equals((Binary)other) ) return 0;
+      	if (!(other instanceof Binary)){throw new ClassCastException("\n Error: compareTo() input was not of class Rational");}
+	else if (other==null){throw new NullPointerException("\n Error: compareTo() input was null");}
+	else if ( this.equals((Binary)other) ) return 0;
 	else if ( this._decNum > ((Binary)other)._decNum ) return 1;
 	else return -1;
     }

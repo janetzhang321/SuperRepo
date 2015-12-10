@@ -5,7 +5,7 @@
   2015-12-08
 */
 
-public class Hexadecimal {
+public class Hexadecimal implements Comparable {
 
     private int _decNum;
     private String _hexNum;
@@ -84,18 +84,19 @@ public class Hexadecimal {
     
     /*=============================================*/
     public boolean equals( Object other ) {
-     	if (this == other)
-     	    return true;
      	if ( !(other instanceof Hexadecimal) )
-     	    return false;
-     	return ( (_decNum == ((Hexadecimal)other)._decNum)
-     		 && (_hexNum.equals( ((Hexadecimal)other)._hexNum ) ) );
+     	    throw new ClassCastException("\n Error: equals() input was not of class Hexadecimal");
+	else if (other==null){throw new NullPointerException("\n Error: equals() input was null");}
+     	else if (this == other)
+     	    return true;
+	return (this==other || compareTo(other)==0);
     }
 
 
     public int compareTo( Object other ) {
      	if ( !(other instanceof Hexadecimal) )
      	    throw new ClassCastException("\n Error: compareTo() input was not of class Hexadecimal");
+	else if (other==null){throw new NullPointerException("\n Error: compareTo() input was null");}
      	return _decNum - ((Hexadecimal)other)._decNum;
     }
     //main method for testing
