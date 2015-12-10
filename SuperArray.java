@@ -24,7 +24,7 @@ class SuperArray implements ListInt {
     
     //~~~~~INSTANCE VARS~~~~~
     //underlying container, or "core" of this data structure:
-    private int[] _data;
+    private Comparable[] _data;
     
     //position of last meaningful value
     private int _lastPos;
@@ -36,7 +36,7 @@ class SuperArray implements ListInt {
     //~~~~~METHODS~~~~~
     //default constructor initializes 10-item array
     public SuperArray() { 
-	_data = new int[10];
+	_data = new Comparable[10];
 	_lastPos = -1; //flag to indicate no lastpos yet
 	_size = 0;	
     }
@@ -59,7 +59,7 @@ class SuperArray implements ListInt {
 		
     //double capacity of this SuperArray
     public void expand() { 
-	int[] temp = new int[ _data.length * 2 ];
+	Comparable[] temp = new Comparable[ _data.length * 2 ];
 	for( int i = 0; i < _data.length; i++ )
 	    temp[i] = _data[i];
 	_data = temp;
@@ -67,13 +67,13 @@ class SuperArray implements ListInt {
 
 		
     //accessor -- return value at specified index
-    public int get( int index ) { return _data[index]; }
+    public Comparable get( int index ) { return _data[index]; }
 
 		
     //mutator -- set value at index to newVal, 
     //           return old value at index
-    public int set( int index, int newVal ) { 
-	int temp = _data[index];
+    public Comparable set( int index, Comparable newVal ) { 
+	Comparable temp = _data[index];
 	_data[index] = newVal;
 	return temp;
     }
@@ -81,33 +81,33 @@ class SuperArray implements ListInt {
     
     // ~~~~~~~~~~~~~~ PHASE II ~~~~~~~~~~~~~~
     //adds an item after the last item
-    public void add( int newVal ) {
+    public void add( Comparable newVal ) {
     	if(_size>=_data.length){
-    		expand();
+	    expand();
     	}
-	    if(newVal==0){_data[_lastPos+1]=-1;} //doesn't allow user to add 0 to the array, and lets you know it was invalid with -1
-	    else{_data[_lastPos+1]=newVal;} //or just do the regular thing
-	    _size++;
-	    _lastPos++;
+	//if(newVal.compareTo(0)==0){ _data[_lastPos+1]=-1;} //doesn't allow user to add 0 to the array, and lets you know it was invalid with -1
+	else{_data[_lastPos+1]=newVal;} //or just do the regular thing
+	_size++;
+	_lastPos++;
     }
 
     //inserts an item at index
     //shifts existing elements to the right
-    public void add( int index, int newVal ) {
+    public void add( int index, Comparable newVal ) {
     	while(index>=_data.length){
-    		expand();
-    		_size=index;
-    		_lastPos=index-1;
+	    expand();
+	    _size=index;
+	    _lastPos=index-1;
     	} 
     	//copy all the elements to the right of the given index to the pos to the right
     	//work backwards
       	for (int i=_size;i>index;i--){
-      		_data[i]=_data[i-1];
-		}
-		//replace element at index with new val
-		_data[index]=newVal;
-		_size++;
-		_lastPos++;
+	    _data[i]=_data[i-1];
+	}
+	//replace element at index with new val
+	_data[index]=newVal;
+	_size++;
+	_lastPos++;
     }
     
 
@@ -115,12 +115,12 @@ class SuperArray implements ListInt {
     //shifts elements left to fill in newly-empted slot
     public void remove( int index ) {
         if(index<=_lastPos){
-    	//copy all elements to right of given index to the pos to the left
-        for (int i=index;i<_size;i++){
-            _data[i]=_data[i+1];
-        }
-        _size--;
-        _lastPos--;
+	    //copy all elements to right of given index to the pos to the left
+	    for (int i=index;i<_size;i++){
+		_data[i]=_data[i+1];
+	    }
+	    _size--;
+	    _lastPos--;
         }
     }
 
@@ -128,7 +128,19 @@ class SuperArray implements ListInt {
     //return number of meaningful items in _data
     public int size() {return _size;}
 
+    public int linSearch(Comparable a) {
+	if ( !(this instanceof SuperArray)){throw new ClassCastException("\n Error: Object was not of class SuperArray");}
+	for(int i=0; i<((SuperArray)this).size(); i++){if (this._data[i]==a) return i;}
+	return -1;
 
+    }
+
+    public boolean isSorted(){
+	if ( !(this instanceof SuperArray)){throw new ClassCastException("\n Error: Object was not of class SuperArray");}
+        for (int i=0 ; i<( (((SuperArray)this).size())-1 ) ;i++){if (this._data[i].compareTo(this._data[i+1])>0) return false;}//num before is greater than the num after
+	return true;
+    }
+    
     //main method for testing
     public static void main( String[] args ) {
     	/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -167,51 +179,68 @@ class SuperArray implements ListInt {
 	
     	/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     	
-	SuperArray mayfield = new SuperArray();
-	System.out.println("Printing empty SuperArray mayfield...");
-	System.out.println(mayfield);
+	  SuperArray mayfield = new SuperArray();
+	  System.out.println("Printing empty SuperArray mayfield...");
+	  System.out.println(mayfield);
     
-	mayfield.add(5);
-	mayfield.add(4);
-	mayfield.add(3);
-	mayfield.add(2);
-	mayfield.add(1);
+	  mayfield.add(5);
+	  mayfield.add(4);
+	  mayfield.add(3);
+	  mayfield.add(2);
+	  mayfield.add(1);
 
-    	System.out.println("Printing populated SuperArray mayfield...");
-	System.out.println(mayfield);
+	  System.out.println("Printing populated SuperArray mayfield...");
+	  System.out.println(mayfield);
 
-	mayfield.remove(3);
-	System.out.println("Printing SuperArray mayfield post-remove...");
-	System.out.println(mayfield);
-	mayfield.remove(3);
-	System.out.println("Printing SuperArray mayfield post-remove...");
-	System.out.println(mayfield);
+	  mayfield.remove(3);
+	  System.out.println("Printing SuperArray mayfield post-remove...");
+	  System.out.println(mayfield);
+	  mayfield.remove(3);
+	  System.out.println("Printing SuperArray mayfield post-remove...");
+	  System.out.println(mayfield);
 
-	mayfield.add(3,99);
-	System.out.println("Printing SuperArray mayfield post-insert...");
-	System.out.println(mayfield);
-	mayfield.add(2,88);
-	System.out.println("Printing SuperArray mayfield post-insert...");
-	System.out.println(mayfield);
-	mayfield.add(1,77);
-	System.out.println("Printing SuperArray mayfield post-insert...");
-	System.out.println(mayfield);
-	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+	  mayfield.add(3,99);
+	  System.out.println("Printing SuperArray mayfield post-insert...");
+	  System.out.println(mayfield);
+	  mayfield.add(2,88);
+	  System.out.println("Printing SuperArray mayfield post-insert...");
+	  System.out.println(mayfield);
+	  mayfield.add(1,77);
+	  System.out.println("Printing SuperArray mayfield post-insert...");
+	  System.out.println(mayfield);
+	  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 	//*****INSERT ANY ADDITIONAL TEST CALLS HERE*****
-    ListInt a=new SuperArray();
+	ListInt l=new SuperArray();
     
 	System.out.println("Printing empty ListInt a...");
-	System.out.println(a);
-	
-	a.add(5);
-	a.add(4);
-	a.add(3);
-	a.add(2);
-	a.add(1);
+	System.out.println(l);
+
+	/*
+	  a.add(5);
+	  a.add(4);
+	  a.add(3);
+	  a.add(2);
+	  a.add(1);
+	*/
+	/*
+	  ListInt a=new SuperArray();
+	  for (Comparable o: ((SuperArray)a)._data)
+	  ((SuperArray)a).add( new Binary ( (int)(10*(Math.random())) ) , o );
+	*/
+	SuperArray a = new SuperArray();
+	a.add( new Binary(2) );
+	a.add( new Hexadecimal(60) );
+	a.add( new Binary(16) );
+	a.add( new Hexadecimal(100) );
+	a.add( new Rational(2, 1) );
+
 	
 	System.out.println("Printing populated ListInt a...");
 	System.out.println(a);
-	
+
+	System.out.println(a.linSearch(new Binary(60)));
+	//System.out.println(a.linSearch(new Binary(16)));
+	/*
 
 	a.remove(3);
 	System.out.println("Printing ListInt a post-remove...");
@@ -219,27 +248,34 @@ class SuperArray implements ListInt {
 	a.remove(3);
 	System.out.println("Printing ListInt a post-remove...");
 	System.out.println(a);
+	*/	
+
+	/*
+	  a.add(3,99);
+	  System.out.println("Printing ListInt a post-insert...");
+	  System.out.println(a);
+	  a.add(2,88);
+	  System.out.println("Printing ListInt a post-insert...");
+	  System.out.println(a);
+	  a.add(1,77);
+	  System.out.println("Printing ListInt a post-insert...");
+	  System.out.println(a);
+	  a.add(7,3);
+	  System.out.println("Printing ListInt a post-insert...");
+	  System.out.println(a);
 	
+	  a.add(20,4);
+	*/
+
+	/*
+	System.out.println(a);
+	a.remove(4);
+	System.out.println(a);
+	System.out.println(a.size());
+	System.out.println(a.get(1));
+
+	*/
 	
-	a.add(3,99);
-	System.out.println("Printing ListInt a post-insert...");
-	System.out.println(a);
-	a.add(2,88);
-	System.out.println("Printing ListInt a post-insert...");
-	System.out.println(a);
-	a.add(1,77);
-	System.out.println("Printing ListInt a post-insert...");
-	System.out.println(a);
-	a.add(7,3);
-	System.out.println("Printing ListInt a post-insert...");
-	System.out.println(a);
-	
-    a.add(20,4);
-    System.out.println(a);
-    a.remove(4);
-    System.out.println(a);
-    System.out.println(a.size());
-    System.out.println(a.get(1));
     }//end main
 		
 }//end class

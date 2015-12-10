@@ -4,10 +4,10 @@ public interface ListInt{
     void expand(); 
     
     //adds n to the end of an array
-    void add(int n);
+    void add(Comparable n);
     
     //adds n to the index of an array if the index exists
-    void add(int n, int index);
+    void add(int index, Comparable n);
     
     //removes the value of array[index] and left-justification
     void remove(int index);
@@ -16,11 +16,11 @@ public interface ListInt{
     int size();
     
     //return value at specified index 
-    int get(int index); 
+    Comparable get(int index); 
     
     //mutator -- set value at index to newVal, 
     //           return old value at index
-    int set(int index, int newValue);
+    Comparable set(int index, Comparable newValue);
     
     
 }
