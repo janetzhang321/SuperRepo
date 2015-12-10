@@ -1,9 +1,10 @@
 /*
   Janet Zhang
   APCS1 pd5
-  HW43 -- This or That
-  2015-12-07
+  HW45 -- Come Together
+  2015-12-10
 */
+
 //skeleton file for class Binary
 
 public class Binary implements Comparable{

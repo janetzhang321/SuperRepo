@@ -1,9 +1,10 @@
 /*
-  Team Irrational-Janet Zhang, Mei Huang
+  Janet Zhang
   APCS1 pd5
-  HW41 -- In America, the Driver Sits on the Left
-  2015-12-03
+  HW45 -- Come Together
+  2015-12-10
 */
+
 
 //PHASE 1
 class Rational implements Comparable {

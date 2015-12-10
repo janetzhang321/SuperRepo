@@ -1,9 +1,10 @@
 /*
-  Team Irrational -- Mei Huang, Janet Zhang
+  Janet Zhang
   APCS1 pd5
-  HW42 -- Array of Titanium
-  2015-12-05
+  HW45 -- Come Together
+  2015-12-10
 */
+
 
 /*****************************
  * SKELETON for
